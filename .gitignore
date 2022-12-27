@@ -1,5 +1,6 @@
 profiles/
 cache.db
+config.custom.yaml
 config.yaml
 
 
