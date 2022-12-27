@@ -7,7 +7,6 @@ with open("config.custom.yaml", "r", encoding="utf8") as f:
 
 with open("config.template.yaml", "r", encoding="utf8") as f:
     template_data = yaml.safe_load(f)
-    template_data["proxy-providers"]["gatern"]["url"] = "sdf"
     template_providers = template_data["proxy-providers"]
     custom_providers = custom_data["proxy-providers"]
     for template_name in template_providers:
