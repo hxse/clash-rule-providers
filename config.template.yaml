@@ -237,8 +237,4 @@ rules:
   - RULE-SET,gfw,S-mode
   - RULE-SET,greatfire,S-mode
   - RULE-SET,telegramcidr,S-mode
-  - DOMAIN-SUFFIX,mojie.cyou,S-mode
-  - DOMAIN-SUFFIX,shuttle.gt-in.com,S-mode
-  - DOMAIN-SUFFIX,whatismyipaddress.com,S-mode
-  - DOMAIN-SUFFIX,iplocation.net,S-mode
   - MATCH,DIRECT
