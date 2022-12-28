@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # coding: utf-8
 import yaml
+import requests
+from pathlib import Path
 
 with open("config.custom.yaml", "r", encoding="utf8") as f:
     custom_data = yaml.safe_load(f)
@@ -30,3 +32,12 @@ with open("config.template.yaml", "r", encoding="utf8") as f:
 
 with open("config.yaml", "w", encoding="utf8") as f:
     yaml.dump(template_data, f, allow_unicode=True)
+
+
+def reload_config(path, url="http://127.0.0.1:9090/configs"):
+    requests.put(url, json={"path": path})
+
+
+configPath = Path("config.yaml").absolute()
+reload_config(configPath.as_posix())
+print("已重载配置", configPath)
