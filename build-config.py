@@ -38,6 +38,25 @@ def reload_config(path, url="http://127.0.0.1:9090/configs"):
     requests.put(url, json={"path": path})
 
 
+def get_rules(url="http://127.0.0.1:9090/rules"):
+    return requests.get(url)
+
+
+def connections(name, url="http://127.0.0.1:9090/connections"):
+    return requests.delete(url + f"/{name}")
+
+
+def all_connections(mode, url="http://127.0.0.1:9090/connections"):
+    if mode == "get":
+        r = requests.get(url)
+        if r.status_code == 200:
+            return r.json()
+    if mode == "delete":
+        requests.delete(url)
+
+
 configPath = Path("config.yaml").absolute()
 reload_config(configPath.as_posix())
 print("已重载配置", configPath)
+all_connections("delete")
+print("已清空连接")
