@@ -42,6 +42,15 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 300
+  yy:
+    type: http
+    path: ./profiles/proxies/yy.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
 
 proxy-groups:
   - name: S-mode
@@ -50,6 +59,7 @@ proxy-groups:
       - S-gatern
       - S-mojie
       - S-xfltd
+      - S-yy
       - A-all
       - DIRECT
       - REJECT
@@ -61,6 +71,7 @@ proxy-groups:
       - A-gatern
       - A-mojie
       - A-xfltd
+      - A-yy
   - name: S-gatern
     type: select
     interval: 3600
@@ -105,6 +116,21 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     use:
       - xfltd
+
+  - name: S-yy
+    type: select
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    proxies:
+      - A-yy
+    use:
+      - yy
+  - name: A-yy
+    type: url-test
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    use:
+      - yy
 
 rule-providers:
   # https://github.com/Loyalsoldier/clash-rules
