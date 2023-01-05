@@ -106,9 +106,8 @@ proxy-groups:
     use:
       - xfltd
 
-# clash-rules项目提供的规则集 https://github.com/Loyalsoldier/clash-rules
-# 规则文件统一存放在 ./profiles/rules/ 目录中
 rule-providers:
+  # https://github.com/Loyalsoldier/clash-rules
   reject:
     type: http
     behavior: domain
@@ -207,6 +206,69 @@ rule-providers:
     path: ./profiles/rules/applications.yaml
     interval: 86400
 
+  # https://github.com/ACL4SSR/ACL4SSR/tree/master/Clash
+  # ACL4SSR的规则碎片,没法直接使用,应该转换一下
+  # BanAd:
+  #   type: http
+  #   behavior: classical
+  #   url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list"
+  #   path: ./profiles/ACL4SSR/BanAd.yaml
+  #   interval: 86400
+
+  # BanEasyList:
+  #   type: http
+  #   behavior: classical
+  #   url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanEasyList.list"
+  #   path: ./profiles/ACL4SSR/BanEasyList.yaml
+  #   interval: 86400
+
+  # BanEasyListChina:
+  #   type: http
+  #   behavior: classical
+  #   url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanEasyListChina.list"
+  #   path: ./profiles/ACL4SSR/BanEasyListChina.yaml
+  #   interval: 86400
+
+  # BanEasyPrivacy:
+  #   type: http
+  #   behavior: classical
+  #   url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanEasyPrivacy.list"
+  #   path: ./profiles/ACL4SSR/BanEasyPrivacy.yaml
+  #   interval: 86400
+
+  # BanProgramAD:
+  #   type: http
+  #   behavior: classical
+  #   url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list"
+  #   path: ./profiles/ACL4SSR/BanProgramAD.yaml
+  #   interval: 86400
+
+  # https://github.com/privacy-protection-tools/anti-AD
+  anti-ad:
+    type: http
+    behavior: domain
+    url: "https://anti-ad.net/clash.yaml"
+    path: ./profiles/anti-ad/anti-ad.yaml
+    interval: 86400
+
+# 黑名单模式，意为「只有命中规则的网络流量，才使用代理」
+rules:
+  - RULE-SET,anti-ad,REJECT
+  # - RULE-SET,BanAd,REJECT
+  # - RULE-SET,BanEasyList,REJECT
+  # - RULE-SET,BanEasyListChina,REJECT
+  # - RULE-SET,BanEasyPrivacy,REJECT
+  # - RULE-SET,BanProgramAD,REJECT
+  # - RULE-SET,applications,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - RULE-SET,private,DIRECT
+  - RULE-SET,reject,REJECT
+  - RULE-SET,tld-not-cn,S-mode
+  - RULE-SET,gfw,S-mode
+  - RULE-SET,greatfire,S-mode
+  - RULE-SET,telegramcidr,S-mode
+  - MATCH,DIRECT
 # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
 # rules:
 #   - RULE-SET,applications,DIRECT
@@ -225,16 +287,3 @@ rule-providers:
 #   - GEOIP,LAN,DIRECT
 #   - GEOIP,CN,DIRECT
 #   - MATCH,PROXY
-
-# 黑名单模式，意为「只有命中规则的网络流量，才使用代理」
-rules:
-  - RULE-SET,applications,DIRECT
-  - DOMAIN,clash.razord.top,DIRECT
-  - DOMAIN,yacd.haishan.me,DIRECT
-  - RULE-SET,private,DIRECT
-  - RULE-SET,reject,REJECT
-  - RULE-SET,tld-not-cn,S-mode
-  - RULE-SET,gfw,S-mode
-  - RULE-SET,greatfire,S-mode
-  - RULE-SET,telegramcidr,S-mode
-  - MATCH,DIRECT
