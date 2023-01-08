@@ -51,18 +51,39 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 300
+  sf:
+    type: http
+    path: ./profiles/proxies/sf.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
 
 proxy-groups:
   - name: S-mode
     type: select
     proxies:
+      - DIRECT
+      - REJECT
+      - A-all
       - S-gatern
       - S-mojie
       - S-xfltd
       - S-yy
-      - A-all
+      - S-sf
+  - name: other
+    type: select
+    proxies:
       - DIRECT
       - REJECT
+      - A-all
+      - S-gatern
+      - S-mojie
+      - S-xfltd
+      - S-yy
+      - S-sf
   - name: A-all
     type: url-test
     interval: 3600
@@ -72,6 +93,7 @@ proxy-groups:
       - A-mojie
       - A-xfltd
       - A-yy
+      - A-sf
   - name: S-gatern
     type: select
     interval: 3600
@@ -131,6 +153,21 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     use:
       - yy
+
+  - name: S-sf
+    type: select
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    proxies:
+      - A-sf
+    use:
+      - sf
+  - name: A-sf
+    type: url-test
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    use:
+      - sf
 
 rule-providers:
   # https://github.com/Loyalsoldier/clash-rules
@@ -294,7 +331,7 @@ rules:
   - RULE-SET,gfw,S-mode
   - RULE-SET,greatfire,S-mode
   - RULE-SET,telegramcidr,S-mode
-  - MATCH,DIRECT
+  - MATCH,other
 # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
 # rules:
 #   - RULE-SET,applications,DIRECT
