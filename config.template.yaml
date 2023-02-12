@@ -12,6 +12,7 @@ mode: Rule
 # info / warning / error / debug / silent
 log-level: info
 external-controller: 127.0.0.1:9090
+proxies:
 
 # 节点配置文件统一存放在 ./profiles/proxies/ 目录中
 proxy-providers:
@@ -73,6 +74,7 @@ proxy-groups:
       - S-xfltd
       - S-yy
       - S-sf
+      - replit_xray_vmess
   - name: other
     type: select
     proxies:
@@ -84,6 +86,7 @@ proxy-groups:
       - S-xfltd
       - S-yy
       - S-sf
+      - replit_xray_vmess
   - name: A-all
     type: url-test
     interval: 3600
@@ -94,6 +97,7 @@ proxy-groups:
       - A-xfltd
       - A-yy
       - A-sf
+      - replit_xray_vmess
   - name: S-gatern
     type: select
     interval: 3600

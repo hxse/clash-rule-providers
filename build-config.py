@@ -23,6 +23,7 @@ with open("config.template.yaml", "r", encoding="utf8") as f:
         "mode",
         "log-level",
         "external-controller",
+        "proxies",
         "rules",
     ]
     assert "rules" in custom_data, "请定义rules字段"
