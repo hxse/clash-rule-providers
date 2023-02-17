@@ -12,6 +12,32 @@ mode: Rule
 # info / warning / error / debug / silent
 log-level: info
 external-controller: 127.0.0.1:9090
+
+# https://github.com/Dreamacro/clash/wiki/Clash-Premium-Features#windows
+# tun模式必须开sudo才能用,window可以安装scoop install sudo
+# 还需要把wintun.dll放到配置目录,https://www.wintun.net
+dns:
+  enable: false
+  enhanced-mode: fake-ip
+  nameserver:
+    - 114.114.114.114
+    - 223.5.5.5
+    - 8.8.8.8
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+  fake-ip-filter:
+    - dns.msftncsi.com
+    - www.msftncsi.com
+    - www.msftconnecttest.com
+tun:
+  enable: false
+  stack: gvisor
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - 198.18.0.2:53
+
 proxies:
 
 # 节点配置文件统一存放在 ./profiles/proxies/ 目录中

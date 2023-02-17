@@ -23,6 +23,8 @@ with open("config.template.yaml", "r", encoding="utf8") as f:
         "mode",
         "log-level",
         "external-controller",
+        "dns",
+        "tun",
         "proxies",
         "rules",
     ]
