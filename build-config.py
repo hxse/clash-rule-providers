@@ -4,6 +4,17 @@ import yaml
 import requests
 from pathlib import Path
 
+def set_udp(path='./profiles/proxies'):
+    for i in Path(path).glob('*.yaml'):
+        with open(i, "r", encoding="utf8") as f:
+            data = yaml.safe_load(f)
+            for item in data['proxies']:
+                item['udp']=True
+        with open(i, "w", encoding="utf8") as f:
+            yaml.dump(data, f, allow_unicode=True)
+
+set_udp()
+
 with open("config.custom.yaml", "r", encoding="utf8") as f:
     custom_data = yaml.safe_load(f)
 
