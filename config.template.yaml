@@ -101,7 +101,19 @@ proxy-groups:
       - S-yy
       - S-sf
       - replit_xray_vmess
-  - name: other
+  - name: S-other
+    type: select
+    proxies:
+      - DIRECT
+      - REJECT
+      - A-all
+      - S-gatern
+      - S-mojie
+      - S-xfltd
+      - S-yy
+      - S-sf
+      - replit_xray_vmess
+  - name: S-game
     type: select
     proxies:
       - DIRECT
@@ -361,7 +373,7 @@ rules:
   - RULE-SET,gfw,S-mode
   - RULE-SET,greatfire,S-mode
   - RULE-SET,telegramcidr,S-mode
-  - MATCH,other
+  - MATCH,S-other
 # 白名单模式，意为「没有命中规则的网络流量，统统使用代理」
 # rules:
 #   - RULE-SET,applications,DIRECT
