@@ -26,8 +26,11 @@ with open("config.template.yaml", "r", encoding="utf8") as f:
     template_providers = template_data["proxy-providers"]
     custom_providers = custom_data["proxy-providers"]
     for template_name in template_providers:
-        custom_item = custom_providers[template_name]
         template_item = template_providers[template_name]
+        if template_item["type"] == "file":
+            continue
+        custom_item = custom_providers[template_name]
+
         for custom_k, custom_v in custom_item.items():
             template_item[custom_k] = custom_v
 
