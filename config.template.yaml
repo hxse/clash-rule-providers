@@ -91,25 +91,78 @@ proxy-providers:
       interval: 300
 
   jp-gatern:
-    type: file
-    filter: 日本
+    type: http
     path: ./profiles/proxies/gatern.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+    filter: 日本
   jp-mojie:
-    type: file
-    filter: 日本
+    type: http
     path: ./profiles/proxies/mojie.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+    filter: 日本
   jp-xfltd:
-    type: file
-    filter: 日本
+    type: http
     path: ./profiles/proxies/xfltd.yaml
-  jp-yy:
-    type: file
-    filter: '日本|专线'
-    path: ./profiles/proxies/yy.yaml
-  jp-sf:
-    type: file
+    url: https://example.com
+    filter: "^[^(test)|(官址)|(备用)].*[^0.3x]$"
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
     filter: 日本
+  jp-yy:
+    type: http
+    path: ./profiles/proxies/yy.yaml
+    url: https://example.com
+    filter: "^.*专线$"
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+    filter: '日本|专线'
+  jp-sf:
+    type: http
     path: ./profiles/proxies/sf.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+    filter: 日本
+
+  # jp-gatern:
+  #   type: file
+  #   filter: 日本
+  #   path: ./profiles/proxies/gatern.yaml
+  # jp-mojie:
+  #   type: file
+  #   filter: 日本
+  #   path: ./profiles/proxies/mojie.yaml
+  # jp-xfltd:
+  #   type: file
+  #   filter: 日本
+  #   path: ./profiles/proxies/xfltd.yaml
+  # jp-yy:
+  #   type: file
+  #   filter: '日本|专线'
+  #   path: ./profiles/proxies/yy.yaml
+  # jp-sf:
+  #   type: file
+  #   filter: 日本
+  #   path: ./profiles/proxies/sf.yaml
 
 proxy-groups:
   - name: S-mode
