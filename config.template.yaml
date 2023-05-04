@@ -89,6 +89,15 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 300
+  kangaroo:
+    type: http
+    path: ./profiles/proxies/kangaroo.yaml
+    url: https://example.com
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
 
   jp-gatern:
     type: http
@@ -176,6 +185,7 @@ proxy-groups:
       - S-xfltd
       - S-yy
       - S-sf
+      - S-kangaroo
       - replit_xray_vmess
   - name: S-other
     type: select
@@ -188,6 +198,7 @@ proxy-groups:
       - S-xfltd
       - S-yy
       - S-sf
+      - S-kangaroo
       - replit_xray_vmess
   - name: S-game
     type: select
@@ -200,6 +211,7 @@ proxy-groups:
       - S-xfltd
       - S-yy
       - S-sf
+      - S-kangaroo
       - replit_xray_vmess
   - name: S-region
     type: select
@@ -221,6 +233,7 @@ proxy-groups:
       - A-xfltd
       - A-yy
       - A-sf
+      - A-kangaroo
       - replit_xray_vmess
   - name: S-gatern
     type: select
@@ -296,6 +309,20 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     use:
       - sf
+  - name: S-kangaroo
+    type: select
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    proxies:
+      - A-kangaroo
+    use:
+      - kangaroo
+  - name: A-kangaroo
+    type: url-test
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    use:
+      - kangaroo
 
   - name: A-jp-gatern
     type: url-test
