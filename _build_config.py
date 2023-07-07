@@ -33,7 +33,8 @@ def create_provider(name, obj, interval1=3600, interval2=300):
 
 def add_group_proxies(custom_data, enable_match=True):
     # enable_match开启匹配前缀功能
-    # 匹配前缀,DOG-gatern项,匹配D-default,O-other,G-Game三个组,最好用大写
+    # 匹配前缀,DOG-gatern项,匹配D-default,O-other,G-Game三个组,最好用大写,包含匹配(in)
+    # 匹配子前缀,R-uk-region,匹配RG-uk-gatern_s,RG-uk-mojie_s,匹配的是[1:-1]中间的uk,相等匹配(==)
     res = []
     for group in custom_data["proxy-groups"]:
         res.append(group)
@@ -43,7 +44,12 @@ def add_group_proxies(custom_data, enable_match=True):
                 group["proxies"].append(f"{i}_s")
                 continue
             if group["name"].split("-")[0] in i.split("-")[0]:
-                group["proxies"].append(f"{i}_s")
+                if len(group["name"].split("-")) <= 2:
+                    group["proxies"].append(f"{i}_s")
+                elif "-".join(group["name"].split("-")[1:-1]) == "-".join(
+                    i.split("-")[1:-1]
+                ):
+                    group["proxies"].append(f"{i}_s")
     return res
 
 
