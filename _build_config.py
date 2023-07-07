@@ -87,10 +87,18 @@ def run_build_config(path="config.custom.yaml", outPath="config.yaml"):
     print("配置文件已生成", path)
 
 
+def get_secret(path):
+    with open(path, "r", encoding="utf8") as f:
+        custom_data = yaml.load(f, Loader=Loader)
+    secret = custom_data["secret"] if "secret" in custom_data else ""
+    return secret
+
+
 def run_api(path):
-    reload_config(path)
+    secret = get_secret(path)
+    reload_config(path, secret=secret)
     print("已重载配置", path)
-    all_connections("delete")
+    all_connections("delete", secret=secret)
     print("已清空连接")
 
 

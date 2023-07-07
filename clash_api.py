@@ -6,6 +6,12 @@ import yaml
 from yaml import CSafeLoader as Loader, CSafeDumper as Dumper
 
 
+def get_header(secret=""):
+    if secret == "":
+        return ""
+    return {"Authorization": f"Bearer {secret}"}
+
+
 def set_udp(path="./profiles/proxies"):
     for i in Path(path).glob("*.yaml"):
         with open(i, "r", encoding="utf8") as f:
@@ -16,25 +22,25 @@ def set_udp(path="./profiles/proxies"):
             yaml.dump(data, f, allow_unicode=True, Dumper=Dumper)
 
 
-def reload_config(path, url="http://127.0.0.1:9090/configs"):
-    requests.put(url, json={"path": path})
+def reload_config(path, url="http://127.0.0.1:9090/configs", secret=""):
+    requests.put(url, json={"path": path}, headers=get_header(secret=secret))
 
 
-def get_rules(url="http://127.0.0.1:9090/rules"):
-    return requests.get(url)
+def get_rules(url="http://127.0.0.1:9090/rules", secret=""):
+    return requests.get(url, headers=get_header(secret=secret))
 
 
-def connections(name, url="http://127.0.0.1:9090/connections"):
-    return requests.delete(url + f"/{name}")
+def connections(name, url="http://127.0.0.1:9090/connections", secret=""):
+    return requests.delete(url + f"/{name}", headers=get_header(secret=secret))
 
 
-def all_connections(mode, url="http://127.0.0.1:9090/connections"):
+def all_connections(mode, url="http://127.0.0.1:9090/connections", secret=""):
     if mode == "get":
-        r = requests.get(url)
+        r = requests.get(url, headers=get_header(secret=secret))
         if r.status_code == 200:
             return r.json()
     if mode == "delete":
-        requests.delete(url)
+        requests.delete(url, headers=get_header(secret=secret))
 
 
 if __name__ == "__main__":
