@@ -16,11 +16,15 @@ def create_proxy_providers(custom_data, black_list):
     return obj
 
 
+def replace_url(url, subconvert="http://127.0.0.1:25500/sub?target=clash&url="):
+    return subconvert + url
+
+
 def create_provider(name, obj, interval1=3600, interval2=300):
     return {
         "type": "http",
         "path": f"./profiles/proxies/{name}.yaml",
-        "url": obj["url"],
+        "url": replace_url(obj["url"]),
         "filter": obj["filter"] if "filter" in obj else "",
         "interval": interval1,
         "health-check": {
