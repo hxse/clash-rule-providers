@@ -1,5 +1,4 @@
 gist/*
-!gist/.gitkeep
 
 profiles/
 cache.db
