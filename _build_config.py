@@ -4,6 +4,7 @@ import yaml
 from yaml import CSafeLoader as Loader, CSafeDumper as Dumper
 from clash_api import reload_config, all_connections
 from pathlib import Path
+from shutil import copyfile
 
 
 def create_proxy_providers(custom_data, black_list):
@@ -112,8 +113,17 @@ def run_api(path):
     print("已清空连接")
 
 
+def upload_gist(customPath, outPath):
+    Path("gist").mkdir(exist_ok=True)
+    copyfile(outPath, f"gist/{outPath}")
+    import pdb
+
+    pdb.set_trace()
+
+
 if __name__ == "__main__":
     customPath = "config.custom.yaml"
     outPath = "config.yaml"
     run_build_config(Path(customPath).resolve().as_posix())
     run_api(Path(outPath).resolve().as_posix())
+    upload_gist(customPath, outPath)
