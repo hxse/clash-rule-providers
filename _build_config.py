@@ -113,9 +113,20 @@ def run_api(path):
     print("已清空连接")
 
 
-def upload_gist(customPath, outPath):
+def upload_gist(customPath, outPath, filterArr=[]):
     Path("gist").mkdir(exist_ok=True)
-    copyfile(outPath, f"gist/{outPath}")
+    gistPath = f"gist/{outPath}"
+
+    copyfile(outPath, gistPath)
+
+    with open(gistPath, "r", encoding="utf8") as f:
+        data = yaml.load(f, Loader=Loader)
+    for i in data["proxy-providers"]:
+        k = data["proxy-providers"][i]
+        for r in filterArr:
+            k["url"] = k["url"].replace(r, "")
+    with open(gistPath, "w", encoding="utf8") as f:
+        yaml.dump(data, f, allow_unicode=True, Dumper=Dumper)
 
 
 if __name__ == "__main__":
@@ -123,4 +134,6 @@ if __name__ == "__main__":
     outPath = "config.yaml"
     run_build_config(Path(customPath).resolve().as_posix())
     run_api(Path(outPath).resolve().as_posix())
-    upload_gist(customPath, outPath)
+    upload_gist(
+        customPath, outPath, filterArr=["http://127.0.0.1:25500/sub?target=clash&url="]
+    )
