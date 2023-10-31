@@ -116,9 +116,6 @@ def run_api(path):
 def upload_gist(customPath, outPath):
     Path("gist").mkdir(exist_ok=True)
     copyfile(outPath, f"gist/{outPath}")
-    import pdb
-
-    pdb.set_trace()
 
 
 if __name__ == "__main__":
