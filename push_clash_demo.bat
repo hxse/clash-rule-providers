@@ -1,8 +1,8 @@
 
-cd gist
+cd "..\clash-rule-providers-gist"
 call "push gist.bat"
 
-cd ..
+
 chcp 65001
 cd %~dp0
 set /p c=请输入commit:
