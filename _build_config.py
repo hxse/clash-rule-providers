@@ -113,9 +113,11 @@ def run_api(path):
     print("已清空连接")
 
 
-def upload_gist(customPath, outPath, filterArr=[]):
-    Path("gist").mkdir(exist_ok=True)
-    gistPath = f"gist/{outPath}"
+def upload_gist(
+    customPath, outPath, filterArr=[], gistPath="../clash-rule-providers-gist"
+):
+    Path(f"{gistPath}").mkdir(exist_ok=True)
+    gistPath = f"{gistPath}/{outPath}"
 
     copyfile(outPath, gistPath)
 
@@ -135,5 +137,8 @@ if __name__ == "__main__":
     run_build_config(Path(customPath).resolve().as_posix())
     run_api(Path(outPath).resolve().as_posix())
     upload_gist(
-        customPath, outPath, filterArr=["http://127.0.0.1:25500/sub?target=clash&url="]
+        customPath,
+        outPath,
+        filterArr=["http://127.0.0.1:25500/sub?target=clash&url="],
+        gistPath="../clash-rule-providers-gist",
     )
