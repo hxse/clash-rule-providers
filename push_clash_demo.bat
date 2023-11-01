@@ -2,8 +2,6 @@
 cd gist
 call "push gist.bat"
 
-echo "2"
-
 cd ..
 chcp 65001
 cd %~dp0
