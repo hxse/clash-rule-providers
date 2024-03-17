@@ -18,7 +18,8 @@ def create_proxy_providers(custom_data, black_list):
 
 
 def replace_url(url, subconvert="http://127.0.0.1:25500/sub?target=clash&url="):
-    return subconvert + url
+    return url
+    # return subconvert + url
 
 
 def create_provider(name, obj, interval1=3600, interval2=300):
